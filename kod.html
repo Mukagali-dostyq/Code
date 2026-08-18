@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Мен де программистпін — Python</title>
+<style>
+:root{
+  --bg:#05070d; --panel:#0d1220; --panel2:#131a2c; --line:#233049;
+  --txt:#e6edf3; --dim:#8b9bb4;
+  --cyan:#22d3ee; --lime:#a3e635; --pink:#f472b6; --amber:#fbbf24;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  overscroll-behavior:none}
+body{padding-bottom:96px}
+a{color:var(--cyan)}
+
+/* ------- ornament strip ------- */
+.orn{height:6px;width:100%;
+  background:repeating-linear-gradient(90deg,var(--cyan) 0 14px,transparent 14px 20px,var(--lime) 20px 26px,transparent 26px 40px);
+  opacity:.55}
+
+header{padding:14px 16px 10px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#0a0f1c,#05070d);position:sticky;top:0;z-index:20}
+h1{margin:0;font-size:17px;letter-spacing:.2px}
+h1 span{color:var(--cyan)}
+.sub{margin-top:4px;font-size:12px;color:var(--dim);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 9px;border-radius:99px;
+  border:1px solid var(--line);background:#0a1120;color:var(--dim)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--amber);animation:pulse 1.2s infinite}
+.badge.ok .dot{background:var(--lime);animation:none}
+.badge.lite .dot{background:var(--cyan);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ------- steps ------- */
+.steps{display:flex;gap:8px;padding:12px 16px 4px;overflow-x:auto;scrollbar-width:none}
+.steps::-webkit-scrollbar{display:none}
+.step{flex:0 0 auto;padding:9px 15px;border-radius:12px;border:1px solid var(--line);
+  background:var(--panel);color:var(--dim);font-size:13px;font-weight:600;cursor:pointer;
+  transition:.18s;white-space:nowrap}
+.step .n{display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;
+  background:#1c2740;color:var(--dim);font-size:11px;margin-right:7px}
+.step.active{color:#04121a;background:linear-gradient(135deg,var(--cyan),var(--lime));border-color:transparent}
+.step.active .n{background:rgba(0,0,0,.28);color:#04121a}
+.step.done .n{background:var(--lime);color:#04121a}
+
+main{padding:12px 16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.card h2{margin:0;padding:14px 16px 4px;font-size:16px}
+.card p.task{margin:0;padding:2px 16px 14px;font-size:13.5px;color:var(--dim);line-height:1.55}
+.card p.task b{color:var(--amber);font-weight:600}
+
+.editor-wrap{position:relative;border-top:1px solid var(--line);background:#080c16}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;
+  border-bottom:1px solid var(--line);background:#0a1020}
+.bar .file{font:600 11.5px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--dim)}
+.bar button{background:none;border:1px solid var(--line);color:var(--dim);font-size:11px;
+  padding:5px 10px;border-radius:8px;cursor:pointer}
+textarea{width:100%;min-height:250px;padding:14px 14px 18px;border:0;outline:0;resize:vertical;
+  background:transparent;color:#dbe7f5;
+  font:500 14.5px/1.72 ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;
+  tab-size:4;white-space:pre;overflow-x:auto}
+
+.runbar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(5,7,13,0),#05070d 34%);display:flex;gap:10px}
+.run{flex:1;border:0;border-radius:14px;padding:16px;font-size:16px;font-weight:800;letter-spacing:.4px;
+  color:#04121a;background:linear-gradient(135deg,var(--lime),var(--cyan));cursor:pointer;
+  box-shadow:0 8px 26px rgba(34,211,238,.28)}
+.run:active{transform:translateY(2px)}
+.run[disabled]{opacity:.45;box-shadow:none}
+
+.out{border-top:1px solid var(--line);background:#04060c;min-height:78px;padding:14px 16px 16px}
+.out .lbl{font-size:10.5px;letter-spacing:1.6px;color:var(--dim);text-transform:uppercase;margin-bottom:8px}
+pre{margin:0;font:500 14.5px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color:var(--lime);white-space:pre-wrap;word-break:break-word;max-height:340px;overflow:auto}
+pre.err{color:#fb7185}
+.hint{margin:12px 16px 0;padding:11px 13px;border-radius:12px;background:#0f1626;
+  border:1px solid var(--line);border-left:3px solid var(--amber);font-size:12.5px;color:var(--dim);line-height:1.55}
+.hint b{color:var(--amber)}
+
+.done-banner{display:none;margin:12px 16px 0;padding:14px;border-radius:14px;text-align:center;
+  background:linear-gradient(135deg,rgba(163,230,53,.14),rgba(34,211,238,.14));
+  border:1px solid rgba(163,230,53,.35);font-size:14px;font-weight:700;color:var(--lime)}
+.done-banner.show{display:block;animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+
+footer{padding:26px 16px 10px;text-align:center;color:#4b5b74;font-size:11.5px;line-height:1.7}
+canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:50}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="orn"></div>
+<header>
+  <h1>Мен де <span>программистпін</span></h1>
+  <div class="sub">
+    <span>Информатика · ашық сабақ</span>
+    <span class="badge" id="eng"><i class="dot"></i><span id="engTxt">Python жүктелуде…</span></span>
+  </div>
+</header>
+
+<div class="steps" id="steps"></div>
+
+<main>
+  <div class="card">
+    <h2 id="tTitle"></h2>
+    <p class="task" id="tTask"></p>
+    <div class="editor-wrap">
+      <div class="bar">
+        <span class="file" id="tFile">program.py</span>
+        <button id="reset">↺ Бастапқы күйге</button>
+      </div>
+      <textarea id="code" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off"></textarea>
+    </div>
+    <div class="out">
+      <div class="lbl">Нәтиже / Результат</div>
+      <pre id="out">▌</pre>
+    </div>
+  </div>
+  <div class="hint" id="hint"></div>
+  <div class="done-banner" id="banner"></div>
+  <footer>
+    Бұл — нағыз Python коды.<br>Дәл осылай ірі компаниялардың программистері жазады.
+  </footer>
+</main>
+
+<div class="runbar"><button class="run" id="run">▶  ІСКЕ ҚОСУ</button></div>
+<canvas id="cf"></canvas>
+
+<script>
+/* =========================================================
+   1. САБАҚ МАЗМҰНЫ — 3 қадам
+   ========================================================= */
+const YEAR = 2026;
+const TASKS = [
+{
+  label:"Атым", file:"1_atym.py",
+  title:"1-қадам. Компьютер сізді таниды",
+  task:"Тырнақшаның ішіндегі есімді өшіріп, <b>өз атыңызды</b> жазыңыз. Содан кейін төмендегі жасыл түймені басыңыз.",
+  hint:"<b>Байқадыңыз ба?</b> Компьютер сіздің атыңызды білмейді. Ол тек сіз жазғанды қайталайды. Программалау — компьютерге не істеу керегін дәл айту.",
+  code:
+`# Тырнақшаның ішіне өз атыңызды жазыңыз
+атым = "Айгүл"
+
+print("Сәлем, " + атым + "!")
+print("Сіз бүгін программа жаздыңыз.")
+`
+},
+{
+  label:"Қайталау", file:"2_qaitalau.py",
+  title:"2-қадам. Компьютер ешқашан жалықпайды",
+  task:"<b>рет = 30</b> дегенді өзгертіңіз: 5, 50, тіпті 500 жазып көріңіз. Бір жол код — жүздеген нәтиже.",
+  hint:"<b>Мұны цикл дейді.</b> Сіз бір рет жаздыңыз — компьютер 500 рет орындады. Дәптер тексеруге кететін уақытты елестетіңіз.",
+  code:
+`# Санды өзгертіп көріңіз: 5, 50, 500
+рет = 30
+
+for i in range(рет):
+    print(str(i + 1) + ". Бүгінгі сабақ тамаша болды!")
+`
+},
+{
+  label:"Мұғалім", file:"3_mugalim.py",
+  title:"3-қадам. Мен қанша уақыт мұғаліммін?",
+  task:"<b>бастаған_жыл</b> дегеннің жанына мұғалім болып жұмыс бастаған жылыңызды жазыңыз. Қалғанын компьютер өзі санайды.",
+  hint:"<b>Дәл осылай</b> банк сіздің пайызыңызды, дәрігер дозаны, мектеп орта баллды санайды. Формула — бір рет. Есеп — миллион рет.",
+  code:
+`# Мұғалім болып бастаған жылыңызды жазыңыз
+бастаған_жыл = 2010
+
+жыл = ${YEAR} - бастаған_жыл
+күн = жыл * 365
+сағат = күн * 24
+сабақ = жыл * 34 * 18
+оқушы = жыл * 25 * 4
+
+print("Мен " + str(жыл) + " жыл мұғаліммін.")
+print("Бұл " + str(күн) + " күн, " + str(сағат) + " сағат.")
+print("Мен шамамен " + str(сабақ) + " сабақ өткіздім.")
+print("Менің қолымнан " + str(оқушы) + " оқушы өтті.")
+print("")
+print("Сіз " + str(оқушы) + " адамның өмірін өзгерттіңіз.")
+`
+}];
+
+/* =========================================================
+   2. ЖЕҢІЛ ҚОЗҒАЛТҚЫШ (fallback) — Python → JS
+      Интернет баяу болса, сабақ тоқтап қалмас үшін.
+   ========================================================= */
+function stripComment(line){
+  let q=null,r="";
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(q){ r+=c; if(c===q && line[i-1]!=="\\") q=null; continue; }
+    if(c==='"'||c==="'"){ q=c; r+=c; continue; }
+    if(c==="#") break;
+    r+=c;
+  }
+  return r;
+}
+function mapExpr(e){
+  // f-string → template literal
+  e = e.replace(/\bf"([^"]*)"/g, (m,s)=>"`"+s.replace(/\{([^}]*)\}/g,"${$1}")+"`");
+  e = e.replace(/\bf'([^']*)'/g, (m,s)=>"`"+s.replace(/\{([^}]*)\}/g,"${$1}")+"`");
+  // "текст" * 20  /  20 * "текст"
+  e = e.replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')\s*\*\s*([\wЀ-ӿ]+)/g,"__rep($1,$2)");
+  e = e.replace(/([\wЀ-ӿ]+)\s*\*\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g,"__rep($2,$1)");
+  // бүтін бөлу  a // b
+  for(let i=0;i<6;i++) e = e.replace(/([\wЀ-ӿ.\)]+)\s*\/\/\s*([\wЀ-ӿ.\(]+)/g,"Math.floor($1/$2)");
+  e = e.replace(/\bTrue\b/g,"true").replace(/\bFalse\b/g,"false").replace(/\bNone\b/g,"null");
+  e = e.replace(/\s+and\s+/g," && ").replace(/\s+or\s+/g," || ").replace(/\bnot\s+/g,"!");
+  e = e.replace(/\bint\(/g,"__int(").replace(/\bstr\(/g,"__str(")
+       .replace(/\blen\(/g,"__len(").replace(/\bround\(/g,"__round(")
+       .replace(/\bfloat\(/g,"Number(").replace(/\babs\(/g,"Math.abs(")
+       .replace(/\bmin\(/g,"Math.min(").replace(/\bmax\(/g,"Math.max(")
+       .replace(/\bsum\(/g,"__sum(").replace(/\binput\(/g,"__input(");
+  return e;
+}
+function pyToJs(src){
+  const lines=src.replace(/\t/g,"    ").split("\n");
+  const stack=[0]; let js="";
+  const declared=new Set();
+  for(let raw of lines){
+    let line=stripComment(raw);
+    if(!line.trim()){ js+="\n"; continue; }
+    const indent=line.match(/^ */)[0].length;
+    let body=line.trim();
+    while(indent<stack[stack.length-1]){ stack.pop(); js+="}\n"; }
+    let open=false, out="";
+    let m;
+    if((m=body.match(/^for\s+([\wЀ-ӿ]+)\s+in\s+range\((.*)\)\s*:$/))){
+      const v=m[1], a=mapExpr(m[2]).split(",");
+      const s=a.length>1?a[0]:"0", e=a.length>1?a[1]:a[0], st=a.length>2?a[2]:"1";
+      out=`for(let ${v}=${s}; ${st}<0?${v}>${e}:${v}<${e}; ${v}+=${st}){__tick();`; open=true;
+    } else if((m=body.match(/^while\s+(.*):$/))){
+      out=`while(${mapExpr(m[1])}){__tick();`; open=true;
+    } else if((m=body.match(/^if\s+(.*):$/))){
+      out=`if(${mapExpr(m[1])}){`; open=true;
+    } else if((m=body.match(/^elif\s+(.*):$/))){
+      out=`} else if(${mapExpr(m[1])}){`; open=true; js=js.replace(/\}\n$/,"");
+    } else if(/^else\s*:$/.test(body)){
+      out=`} else {`; open=true; js=js.replace(/\}\n$/,"");
+    } else if((m=body.match(/^print\((.*)\)$/))){
+      out=`__out(${mapExpr(m[1])});`;
+    } else if((m=body.match(/^([\wЀ-ӿ]+)\s*=\s*([^=].*)$/))){
+      const v=m[1];
+      out=(declared.has(v)?"":"let ")+`${v} = ${mapExpr(m[2])};`;
+      declared.add(v);
+    } else if((m=body.match(/^([\wЀ-ӿ]+)\s*([+\-*/])=\s*(.*)$/))){
+      out=`${m[1]} ${m[2]}= ${mapExpr(m[3])};`;
+    } else {
+      out=mapExpr(body)+";";
+    }
+    js+=out+"\n";
+    if(open) stack.push(indent+1>stack[stack.length-1]?indent+1:stack[stack.length-1]+1);
+    if(open){ stack[stack.length-1]=indent+1; }
+  }
+  while(stack.length>1){ stack.pop(); js+="}\n"; }
+  return js;
+}
+function runLite(src){
+  const buf=[]; let ticks=0;
+  const __out=(...a)=>{ if(buf.length>2500) throw new Error("Тым көп нәтиже"); buf.push(a.map(fmt).join(" ")); };
+  const fmt=v=>{ if(v===null||v===undefined)return"None"; if(v===true)return"True"; if(v===false)return"False"; return String(v); };
+  const __tick=()=>{ if(++ticks>400000) throw new Error("Цикл тым ұзақ — санды азайтыңыз"); };
+  const __int=v=>Math.trunc(Number(v)), __str=v=>fmt(v), __len=v=>v.length;
+  const __round=(v,d=0)=>{const p=Math.pow(10,d);return Math.round(v*p)/p};
+  const __rep=(s,n)=>String(s).repeat(Math.max(0,Math.trunc(n)));
+  const __sum=a=>a.reduce((x,y)=>x+y,0);
+  const __input=()=>"";
+  const fn=new Function("__out","__tick","__int","__str","__len","__round","__rep","__sum","__input","fmt",
+    '"use strict";'+pyToJs(src));
+  fn(__out,__tick,__int,__str,__len,__round,__rep,__sum,__input,fmt);
+  return buf.join("\n");
+}
+
+/* =========================================================
+   3. НАҒЫЗ PYTHON (Pyodide) — фонда жүктеледі
+   ========================================================= */
+let pyodide=null, pyState="loading";
+const engEl=document.getElementById("eng"), engTxt=document.getElementById("engTxt");
+function setEngine(state){
+  pyState=state;
+  engEl.className="badge"+(state==="ready"?" ok":state==="lite"?" lite":"");
+  engTxt.textContent = state==="ready" ? "Нағыз Python дайын"
+                     : state==="lite" ? "Жеңіл режим — бәрі жұмыс істейді"
+                     : "Python жүктелуде…";
+}
+(function loadPy(){
+  const t=setTimeout(()=>{ if(pyState==="loading") setEngine("lite"); },25000);
+  const s=document.createElement("script");
+  s.src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+  s.onerror=()=>{ clearTimeout(t); setEngine("lite"); };
+  s.onload=async()=>{
+    try{
+      pyodide=await loadPyodide({indexURL:"https://cdn.jsdelivr.net/pyodide/v0.26.4/full/"});
+      clearTimeout(t); setEngine("ready");
+    }catch(e){ clearTimeout(t); setEngine("lite"); }
+  };
+  document.head.appendChild(s);
+})();
+async function runPy(src){
+  const buf=[];
+  pyodide.setStdout({batched:s=>buf.push(s)});
+  pyodide.setStderr({batched:s=>buf.push(s)});
+  await pyodide.runPythonAsync(src);
+  return buf.join("\n");
+}
+
+/* =========================================================
+   4. ИНТЕРФЕЙС
+   ========================================================= */
+let cur=0; const done=new Set();
+const $=id=>document.getElementById(id);
+const codeEl=$("code"), outEl=$("out");
+
+function renderSteps(){
+  $("steps").innerHTML=TASKS.map((t,i)=>
+    `<button class="step ${i===cur?"active":""} ${done.has(i)?"done":""}" data-i="${i}">
+       <span class="n">${done.has(i)?"✓":i+1}</span>${t.label}</button>`).join("");
+  [...document.querySelectorAll(".step")].forEach(b=>b.onclick=()=>load(+b.dataset.i));
+}
+function load(i){
+  cur=i; const t=TASKS[i];
+  $("tTitle").textContent=t.title;
+  $("tTask").innerHTML=t.task;
+  $("tFile").textContent=t.file;
+  $("hint").innerHTML=t.hint;
+  codeEl.value = localStorage.getItem("code"+i) || t.code;
+  outEl.textContent="▌"; outEl.className="";
+  $("banner").className="done-banner";
+  renderSteps(); window.scrollTo({top:0,behavior:"smooth"});
+}
+codeEl.addEventListener("input",()=>localStorage.setItem("code"+cur,codeEl.value));
+$("reset").onclick=()=>{ localStorage.removeItem("code"+cur); codeEl.value=TASKS[cur].code; };
+
+$("run").onclick=async()=>{
+  const btn=$("run"); btn.disabled=true; btn.textContent="⏳  ОРЫНДАЛУДА…";
+  outEl.className=""; outEl.textContent="";
+  let res,ok=true;
+  try{
+    res = (pyState==="ready") ? await runPy(codeEl.value) : runLite(codeEl.value);
+  }catch(e){
+    ok=false;
+    res = "Қате бар. Қорықпаңыз — программистер күніне 100 рет қателеседі.\n\n"
+        + String(e.message||e).split("\n").slice(-3).join("\n");
+  }
+  btn.disabled=false; btn.textContent="▶  ІСКЕ ҚОСУ";
+  if(!ok){ outEl.className="err"; outEl.textContent=res; return; }
+  typeOut(res||"(нәтиже жоқ — print() жазуды ұмытпаңыз)");
+  if(res && res.trim()){
+    done.add(cur); renderSteps(); confetti();
+    const b=$("banner");
+    b.textContent = cur<TASKS.length-1
+      ? "Жарайсыз! Келесі қадамға өтіңіз →"
+      : "Сіз бүгін нағыз программа жаздыңыз.";
+    b.className="done-banner show";
+  }
+};
+function typeOut(txt){
+  const lines=txt.split("\n"); outEl.textContent=""; let i=0;
+  const speed = lines.length>40 ? 4 : 45;
+  (function tick(){
+    if(i>=lines.length) return;
+    outEl.textContent += (i?"\n":"")+lines[i++];
+    outEl.scrollTop=outEl.scrollHeight;
+    setTimeout(tick,speed);
+  })();
+}
+
+/* конфетти */
+const cv=$("cf"), cx=cv.getContext("2d"); let parts=[];
+function resize(){ cv.width=innerWidth; cv.height=innerHeight; } resize(); onresize=resize;
+function confetti(){
+  const cols=["#22d3ee","#a3e635","#f472b6","#fbbf24"];
+  for(let i=0;i<90;i++) parts.push({x:innerWidth/2+(Math.random()-.5)*160,y:innerHeight*.42,
+    vx:(Math.random()-.5)*9,vy:Math.random()*-11-3,g:.34,s:Math.random()*6+3,
+    c:cols[i%4],r:Math.random()*6,vr:(Math.random()-.5)*.35,life:120});
+  if(parts.length) requestAnimationFrame(anim);
+}
+function anim(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts=parts.filter(p=>p.life-- >0 && p.y<cv.height+40);
+  parts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=p.g; p.r+=p.vr;
+    cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle=p.c;
+    cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.62); cx.restore(); });
+  if(parts.length) requestAnimationFrame(anim); else cx.clearRect(0,0,cv.width,cv.height);
+}
+load(0);
+</script>
+</body>
+</html>

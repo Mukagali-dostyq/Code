@@ -1,0 +1,268 @@
+<title>Неделя 28.09 – 02.10</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600&display=swap">
+<style>
+:root{
+  --bg:#F6F7F3; --panel:#FFFFFF; --ink:#1C2330; --mut:#5E6776; --line:#DCE0D8;
+  --common:#0F766E; --common-soft:#DDF1EE;
+  --eleven:#8A3B6B; --eleven-soft:#F5E3EC;
+  --ai:#2F5DA8; --ai-soft:#E2EAF7;
+  --a:#2F7D32; --b:#9A5B00; --c:#B3261E;
+  --a-soft:#E3F1E3; --b-soft:#FBEBD2; --c-soft:#F9E0DE;
+  --display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --body:"Golos Text","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#12161C; --panel:#1A2029; --ink:#E7EBF0; --mut:#9AA4B2; --line:#2B3440;
+  --common:#5CCFC2; --common-soft:#173532;
+  --eleven:#E59BC4; --eleven-soft:#3A1F2F;
+  --ai:#8DB4F0; --ai-soft:#1B2A42;
+  --a:#7BCB7F; --b:#E8B45A; --c:#F08C84;
+  --a-soft:#1B3020; --b-soft:#3A2C14; --c-soft:#3D1D1B;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#12161C; --panel:#1A2029; --ink:#E7EBF0; --mut:#9AA4B2; --line:#2B3440;
+  --common:#5CCFC2; --common-soft:#173532;
+  --eleven:#E59BC4; --eleven-soft:#3A1F2F;
+  --ai:#8DB4F0; --ai-soft:#1B2A42;
+  --a:#7BCB7F; --b:#E8B45A; --c:#F08C84;
+  --a-soft:#1B3020; --b-soft:#3A2C14; --c-soft:#3D1D1B;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.55;
+  margin:0;padding-inline:18px;padding-block:28px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(24px,4.2vw,36px);line-height:1.15;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:18px;margin:0 0 6px;text-wrap:balance}
+.lede{color:var(--mut);margin:10px 0 0;max-width:68ch}
+.sec-lede{color:var(--mut);margin:0 0 16px;max-width:68ch}
+a{color:var(--common);font-weight:500}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.pill{font-size:12.5px;font-weight:500;padding:4px 10px;border-radius:99px;border:1px solid var(--line);background:var(--panel);color:var(--mut)}
+.pill b{color:var(--ink);font-weight:600}
+
+.who{display:inline-flex;align-items:center;justify-content:center;font:700 12.5px var(--mono);padding:4px 8px;border-radius:6px;min-width:40px}
+.who.all{background:var(--common-soft);color:var(--common)}
+.who.el{background:var(--eleven-soft);color:var(--eleven)}
+.who.ai{background:var(--ai-soft);color:var(--ai)}
+.lv{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:5px;font:700 11.5px/1 var(--mono)}
+.lv.A{background:var(--a-soft);color:var(--a)} .lv.B{background:var(--b-soft);color:var(--b)} .lv.C{background:var(--c-soft);color:var(--c)}
+.lvs{display:inline-flex;gap:3px}
+
+/* topic path */
+.path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.step .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.step h3{margin:0;font-size:15.5px;font-weight:600}
+.step p{margin:0;font-size:13.5px;color:var(--mut)}
+.why{margin-top:14px;font-size:14px;color:var(--mut);max-width:78ch}
+.why b{color:var(--ink)}
+
+/* days */
+.days{display:flex;flex-direction:column;gap:14px}
+.day{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.day > header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line)}
+.day > header h3{margin:0;font-family:var(--display);font-weight:600;font-size:16px}
+.day > header .cnt{font:500 12.5px var(--mono);color:var(--mut)}
+.les{display:grid;grid-template-columns:110px 48px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line)}
+.les:last-child{border-bottom:0}
+.les .cls{font-weight:600}
+.les .cls small{display:block;font-weight:400;font-size:12px;color:var(--mut)}
+.les .tp{font-size:14.5px}
+.les .tp small{display:block;color:var(--mut);font-size:12.5px}
+.les .set{font:600 12.5px var(--body);white-space:nowrap}
+.les.extra{background:var(--bg);color:var(--mut);font-size:13.5px}
+
+/* flows */
+.flows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pp{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.pp header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line)}
+.pp header h3{margin:0;font-size:15.5px;font-weight:600}
+.pp header a{margin-left:auto;font-size:13px}
+.pp.all header{background:var(--common-soft)} .pp.el header{background:var(--eleven-soft)} .pp.ai header{background:var(--ai-soft)}
+.tl{list-style:none;margin:0;padding:6px 0}
+.tl li{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:7px 16px;font-size:14px}
+.tl .t{font:500 12.5px var(--mono);color:var(--mut);font-variant-numeric:tabular-nums}
+.tl .lvs{align-self:center}
+.tl small{color:var(--mut)}
+.pp.wide{grid-column:1 / -1}
+
+.notes{color:var(--mut);font-size:13.5px;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px;max-width:78ch}
+.notes b{color:var(--ink)}
+
+@media (max-width:860px){ .path{grid-template-columns:repeat(2,minmax(0,1fr))} .flows{grid-template-columns:1fr} }
+@media (max-width:560px){
+  .path{grid-template-columns:1fr}
+  .les{grid-template-columns:48px minmax(0,1fr);row-gap:4px}
+  .les .cls{grid-column:1 / -1}
+  .les .set{grid-column:2}
+  .tl li{grid-template-columns:54px minmax(0,1fr)}
+  .tl .lvs{grid-column:2}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <h1>Неделя 28.09 – 02.10</h1>
+  <p class="lede">Первые пары — повторение систем счисления для всех. Затем у 11 классов новая тема «IP-адрес и маска»,
+  после неё логические операции для всех. В пятницу у 11 классов зачёт. Уроки ИИ всю неделю: сценарий мультфильма.</p>
+  <div class="meta">
+    <span class="pill">Всего <b>30 уроков</b></span>
+    <span class="pill">Информатика <b>12 пар</b></span>
+    <span class="pill">ИИ <b>6 уроков</b></span>
+    <span class="pill">Задачи: <a href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg" target="_blank" rel="noopener">все 5 наборов</a></span>
+  </div>
+</header>
+
+<section>
+  <h2>Порядок тем</h2>
+  <div class="path">
+    <div class="step"><div class="top"><span class="who all">Д1</span><span class="lvs"><i class="lv A">A</i><i class="lv B">B</i></span></div>
+      <h3>Повторение: системы счисления</h3><p>Для всех. Перевод 10 ↔ 2, 8, 16, сложение в двоичной.</p></div>
+    <div class="step"><div class="top"><span class="who el">Д2</span><span class="lvs"><i class="lv B">B</i><i class="lv C">C</i></span></div>
+      <h3>IP-адрес и маска подсети</h3><p>Только 11. Новая тема: адрес сети, число узлов, байт маски.</p></div>
+    <div class="step"><div class="top"><span class="who all">Д3</span><span class="lvs"><i class="lv A">A</i><i class="lv B">B</i></span></div>
+      <h3>Логические операции</h3><p>Для всех. Высказывание, НЕ, И, ИЛИ, таблицы истинности.</p></div>
+    <div class="step"><div class="top"><span class="who el">Д4</span><span class="lvs"><i class="lv B">B</i><i class="lv C">C</i></span></div>
+      <h3>Зачёт и логика B–C</h3><p>Только 11. Зачёт по трём темам, импликация, задачи ЕНТ.</p></div>
+  </div>
+  <p class="why"><b>Почему маски раньше логики.</b> Маска — это прямое применение двоичной системы, поэтому она идёт сразу
+  после повторения. Адрес сети считается поразрядным «И»: на Д2 ученики делают это по правилу, а на Д3 узнают, что это
+  логическая операция. У 10 классов масок на этой неделе нет: у них повторение и логические операции.</p>
+</section>
+
+<section>
+  <h2>По дням</h2>
+  <p class="sec-lede">Номера уроков в расписании у меня нет, поэтому уроки внутри дня не упорядочены по времени.</p>
+  <div class="days">
+
+    <article class="day">
+      <header><h3>Понедельник · 28.09</h3><span class="cnt">3 пары + 1 урок = 7</span></header>
+      <div class="les"><span class="cls">10 А<small>пара</small></span><span class="who all">Д1</span>
+        <span class="tp">Повторение: системы счисления<small>ДЗ для 10 класса</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set1" target="_blank" rel="noopener">Набор 1</a></div>
+      <div class="les"><span class="cls">10 Б<small>пара</small></span><span class="who all">Д1</span>
+        <span class="tp">Повторение: системы счисления<small>ДЗ для 10 класса</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set1" target="_blank" rel="noopener">Набор 1</a></div>
+      <div class="les"><span class="cls">11 Б/Е<small>пара</small></span><span class="who all">Д1</span>
+        <span class="tp">Повторение: системы счисления<small>Проверка ДЗ от 25.09, если ещё не разобрали · ДЗ для 11 класса</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set1" target="_blank" rel="noopener">Набор 1</a></div>
+      <div class="les"><span class="cls">10 Ә<small>урок</small></span><span class="who ai">ИИ</span>
+        <span class="tp">Сценарий мультфильма</span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set5" target="_blank" rel="noopener">Набор 5</a></div>
+    </article>
+
+    <article class="day">
+      <header><h3>Вторник · 29.09</h3><span class="cnt">2 пары = 4 · классный час</span></header>
+      <div class="les"><span class="cls">11 А/Ә<small>пара</small></span><span class="who all">Д1</span>
+        <span class="tp">Повторение: системы счисления<small>ДЗ для 11 класса</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set1" target="_blank" rel="noopener">Набор 1</a></div>
+      <div class="les"><span class="cls">11 Б/Е<small>пара</small></span><span class="who el">Д2</span>
+        <span class="tp">IP-адрес и маска подсети<small>Диктант по терминам · разбор ДЗ</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set2" target="_blank" rel="noopener">Набор 2</a></div>
+      <div class="les extra"><span class="cls">11 Ә<small>7-й урок</small></span><span></span><span class="tp">Классный час</span><span></span></div>
+    </article>
+
+    <article class="day">
+      <header><h3>Среда · 30.09</h3><span class="cnt">2 пары + 2 урока = 6</span></header>
+      <div class="les"><span class="cls">11 А/Ә<small>пара</small></span><span class="who el">Д2</span>
+        <span class="tp">IP-адрес и маска подсети<small>Диктант по терминам · разбор ДЗ</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set2" target="_blank" rel="noopener">Набор 2</a></div>
+      <div class="les"><span class="cls">11 Б/Е<small>пара</small></span><span class="who all">Д3</span>
+        <span class="tp">Логические операции<small>ДЗ для 11 класса к пятнице</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set3" target="_blank" rel="noopener">Набор 3</a></div>
+      <div class="les"><span class="cls">10 Б<small>урок</small></span><span class="who ai">ИИ</span>
+        <span class="tp">Сценарий мультфильма</span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set5" target="_blank" rel="noopener">Набор 5</a></div>
+      <div class="les"><span class="cls">11 В<small>урок</small></span><span class="who ai">ИИ</span>
+        <span class="tp">Сценарий мультфильма</span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set5" target="_blank" rel="noopener">Набор 5</a></div>
+    </article>
+
+    <article class="day">
+      <header><h3>Четверг · 01.10</h3><span class="cnt">2 пары + 2 урока = 6</span></header>
+      <div class="les"><span class="cls">11 А/Ә<small>пара</small></span><span class="who all">Д3</span>
+        <span class="tp">Логические операции<small>ДЗ для 11 класса к пятнице</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set3" target="_blank" rel="noopener">Набор 3</a></div>
+      <div class="les"><span class="cls">10 А<small>пара</small></span><span class="who all">Д3</span>
+        <span class="tp">Логические операции<small>Проверка ДЗ по системам счисления · ДЗ для 10 класса</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set3" target="_blank" rel="noopener">Набор 3</a></div>
+      <div class="les"><span class="cls">10 В<small>урок</small></span><span class="who ai">ИИ</span>
+        <span class="tp">Сценарий мультфильма</span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set5" target="_blank" rel="noopener">Набор 5</a></div>
+      <div class="les"><span class="cls">11 Г<small>урок</small></span><span class="who ai">ИИ</span>
+        <span class="tp">Сценарий мультфильма</span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set5" target="_blank" rel="noopener">Набор 5</a></div>
+    </article>
+
+    <article class="day">
+      <header><h3>Пятница · 02.10</h3><span class="cnt">3 пары + 1 урок = 7</span></header>
+      <div class="les"><span class="cls">11 А/Ә<small>пара</small></span><span class="who el">Д4</span>
+        <span class="tp">Зачёт и логика B–C</span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set4" target="_blank" rel="noopener">Набор 4</a></div>
+      <div class="les"><span class="cls">11 Б/Е<small>пара</small></span><span class="who el">Д4</span>
+        <span class="tp">Зачёт и логика B–C</span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set4" target="_blank" rel="noopener">Набор 4</a></div>
+      <div class="les"><span class="cls">10 Б<small>пара</small></span><span class="who all">Д3</span>
+        <span class="tp">Логические операции<small>Проверка ДЗ по системам счисления · ДЗ для 10 класса</small></span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set3" target="_blank" rel="noopener">Набор 3</a></div>
+      <div class="les"><span class="cls">11 Д<small>урок</small></span><span class="who ai">ИИ</span>
+        <span class="tp">Сценарий мультфильма</span><a class="set" href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set5" target="_blank" rel="noopener">Набор 5</a></div>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <h2>Ход каждой пары</h2>
+  <p class="sec-lede">Номера заданий — из наборов. Пара — 80 минут, урок ИИ — 40 минут.</p>
+  <div class="flows">
+    <article class="pp all">
+      <header><span class="who all">Д1</span><h3>Повторение: системы счисления</h3><a href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set1" target="_blank" rel="noopener">Набор 1</a></header>
+      <ol class="tl">
+        <li><span class="t">0–10</span><span>Разминка, 3 вопроса устно. У 11 Б/Е — вопросы по ДЗ от 25.09</span><span class="lvs"><i class="lv A">A</i></span></li>
+        <li><span class="t">10–30</span><span>Правила на доске: деление на 2, степени двойки, триады и тетрады, сложение в двоичной</span><span></span></li>
+        <li><span class="t">30–55</span><span>Практика A: задания 1–5</span><span class="lvs"><i class="lv A">A</i></span></li>
+        <li><span class="t">55–75</span><span>Практика B: задания 1–3, разбор у доски</span><span class="lvs"><i class="lv B">B</i></span></li>
+        <li><span class="t">75–80</span><span>ДЗ: 10 класс — 5 заданий A–B, 11 класс — 5 заданий B–C</span><span></span></li>
+      </ol>
+    </article>
+    <article class="pp el">
+      <header><span class="who el">Д2</span><h3>IP-адрес и маска подсети</h3><a href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set2" target="_blank" rel="noopener">Набор 2</a></header>
+      <ol class="tl">
+        <li><span class="t">0–10</span><span>Терминологический диктант, 10 терминов</span><span class="lvs"><i class="lv A">A</i></span></li>
+        <li><span class="t">10–20</span><span>Разбор ДЗ по системам счисления</span><span class="lvs"><i class="lv B">B</i></span></li>
+        <li><span class="t">20–40</span><span>Новая тема: IP-адрес, маска, /24, адрес сети. Пример на доске: 192.168.5.130 и 255.255.255.0</span><span></span></li>
+        <li><span class="t">40–62</span><span>Задачи B: 1–6</span><span class="lvs"><i class="lv B">B</i></span></li>
+        <li><span class="t">62–78</span><span>Задачи C: 1–6. Что не успели — разобрать на Д4</span><span class="lvs"><i class="lv C">C</i></span></li>
+        <li><span class="t">78–80</span><span>Итог: три правила маски</span><span></span></li>
+      </ol>
+    </article>
+    <article class="pp all">
+      <header><span class="who all">Д3</span><h3>Логические операции</h3><a href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set3" target="_blank" rel="noopener">Набор 3</a></header>
+      <ol class="tl">
+        <li><span class="t">0–10</span><span>Опрос по Д1, 3 вопроса. У 10 классов — сбор ДЗ</span><span class="lvs"><i class="lv A">A</i></span></li>
+        <li><span class="t">10–30</span><span>Новая тема: высказывание, НЕ, И, ИЛИ, таблицы, порядок действий. 11 классам: «И» вы уже применяли в масках</span><span></span></li>
+        <li><span class="t">30–52</span><span>Практика A: задания 1–4</span><span class="lvs"><i class="lv A">A</i></span></li>
+        <li><span class="t">52–75</span><span>Практика B: задания 1–4, задание 3 — закон де Моргана</span><span class="lvs"><i class="lv B">B</i></span></li>
+        <li><span class="t">75–80</span><span>ДЗ: 10 класс — 5 заданий по логике, 11 класс — маски и логика к пятнице</span><span></span></li>
+      </ol>
+    </article>
+    <article class="pp el">
+      <header><span class="who el">Д4</span><h3>Зачёт и логика B–C</h3><a href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set4" target="_blank" rel="noopener">Набор 4</a></header>
+      <ol class="tl">
+        <li><span class="t">0–40</span><span>Зачёт, 10 заданий: системы счисления, маски, логика. Индивидуально</span><span class="lvs"><i class="lv B">B</i><i class="lv C">C</i></span></li>
+        <li><span class="t">40–50</span><span>Импликация, эквивалентность, исключающее ИЛИ — таблицы</span><span></span></li>
+        <li><span class="t">50–72</span><span>Задачи C в формате ЕНТ: 1–5</span><span class="lvs"><i class="lv C">C</i></span></li>
+        <li><span class="t">72–80</span><span>Разбор типичных ошибок зачёта</span><span></span></li>
+      </ol>
+    </article>
+    <article class="pp ai wide">
+      <header><span class="who ai">ИИ</span><h3>Сценарий мультфильма · 40 минут</h3><a href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg#set5" target="_blank" rel="noopener">Набор 5</a></header>
+      <ol class="tl">
+        <li><span class="t">0–5</span><span>2–3 ученика показывают паспорт своего персонажа <small>· проверка ДЗ</small></span><span></span></li>
+        <li><span class="t">5–15</span><span>Что такое сценарий: логлайн «герой хочет…, но…» и пять шагов истории. Разбор примера с роботом Ботой</span><span></span></li>
+        <li><span class="t">15–20</span><span>Каждый пишет свой логлайн</span><span></span></li>
+        <li><span class="t">20–25</span><span>Телефоны по сигналу, 5 минут: промпт из набора, ИИ предлагает 3 идеи. Телефоны убираем</span><span></span></li>
+        <li><span class="t">25–37</span><span>Пять шагов истории и таблица сцен своими словами</span><span></span></li>
+        <li><span class="t">37–40</span><span>2 ученика читают логлайн. ДЗ: дописать 5 сцен. Следующий урок — раскадровка</span><span></span></li>
+      </ol>
+    </article>
+  </div>
+</section>
+
+<footer class="notes">
+  <span><b>Задачи и ответы</b> в <a href="https://claude.ai/artifact/WBp4LiCKQvocN1GTPxmXkg" target="_blank" rel="noopener">наборах</a> — на русском и казахском.
+  Ответы скрыты, пока их не включить. Все ответы пересчитаны программой.</span>
+  <span><b>Расписание</b> взято из файла «Мектеп кестесі (11.09) v2». Если пары переставили, скажите, и я пересчитаю.</span>
+  <span><b>Следующая неделя.</b> Логические операции продолжаются у всех: 10 классы получат уровень B, у 11 классов будут логические уравнения и задачи ЕНТ.</span>
+</footer>
+
+</div>

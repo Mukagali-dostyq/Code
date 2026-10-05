@@ -1,0 +1,376 @@
+<title>Цикл 4 пар · Информатика</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600&display=swap">
+<style>
+:root{
+  --bg:#F6F7F3; --panel:#FFFFFF; --ink:#1C2330; --mut:#5E6776; --line:#DCE0D8;
+  --common:#0F766E; --common-soft:#DDF1EE;
+  --eleven:#8A3B6B; --eleven-soft:#F5E3EC;
+  --a:#2F7D32; --b:#9A5B00; --c:#B3261E;
+  --a-soft:#E3F1E3; --b-soft:#FBEBD2; --c-soft:#F9E0DE;
+  --display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --body:"Golos Text","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#12161C; --panel:#1A2029; --ink:#E7EBF0; --mut:#9AA4B2; --line:#2B3440;
+  --common:#5CCFC2; --common-soft:#173532;
+  --eleven:#E59BC4; --eleven-soft:#3A1F2F;
+  --a:#7BCB7F; --b:#E8B45A; --c:#F08C84;
+  --a-soft:#1B3020; --b-soft:#3A2C14; --c-soft:#3D1D1B;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#12161C; --panel:#1A2029; --ink:#E7EBF0; --mut:#9AA4B2; --line:#2B3440;
+  --common:#5CCFC2; --common-soft:#173532;
+  --eleven:#E59BC4; --eleven-soft:#3A1F2F;
+  --a:#7BCB7F; --b:#E8B45A; --c:#F08C84;
+  --a-soft:#1B3020; --b-soft:#3A2C14; --c-soft:#3D1D1B;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.55;
+  margin:0;padding-inline:18px;padding-block:28px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(24px,4.2vw,36px);line-height:1.15;
+  margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:18px;margin:0 0 6px;text-wrap:balance}
+.lede{color:var(--mut);margin:10px 0 0;max-width:66ch}
+.sec-lede{color:var(--mut);margin:0 0 16px;max-width:66ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.pill{font-size:12.5px;font-weight:500;padding:4px 10px;border-radius:99px;border:1px solid var(--line);
+  background:var(--panel);color:var(--mut)}
+.pill b{color:var(--ink);font-weight:600}
+
+/* who-tags and level chips */
+.who{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.03em;
+  text-transform:uppercase;padding:3px 9px;border-radius:6px}
+.who.all{background:var(--common-soft);color:var(--common)}
+.who.el{background:var(--eleven-soft);color:var(--eleven)}
+.lv{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:6px;
+  font:700 13px/1 var(--mono)}
+.lv.A{background:var(--a-soft);color:var(--a)}
+.lv.B{background:var(--b-soft);color:var(--b)}
+.lv.C{background:var(--c-soft);color:var(--c)}
+.lvs{display:inline-flex;gap:4px}
+
+/* cycle cards */
+.cycle{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.day{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;
+  display:flex;flex-direction:column;gap:10px}
+.day.all{border-top:4px solid var(--common)}
+.day.el{border-top:4px solid var(--eleven)}
+.day .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.dnum{font:700 22px/1 var(--mono)}
+.day.all .dnum{color:var(--common)} .day.el .dnum{color:var(--eleven)}
+.day h3{margin:0;font-size:16px;font-weight:600}
+.day ul{margin:0;padding-left:18px;color:var(--mut);font-size:14px;display:flex;flex-direction:column;gap:3px}
+.day .row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* week grid */
+.tw{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);font-weight:600;
+  text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th .dt{display:block;font:500 12px var(--mono);letter-spacing:0;text-transform:none;color:var(--mut);opacity:.8}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.cls{font-weight:600;white-space:nowrap}
+td.cls small{display:block;font-weight:400;color:var(--mut);font-size:12px}
+.slot{display:inline-flex;flex-direction:column;gap:2px;padding:6px 9px;border-radius:8px;min-width:88px}
+.slot b{font:700 14px var(--mono)}
+.slot span{font-size:12px}
+.slot.all{background:var(--common-soft);color:var(--common)}
+.slot.el{background:var(--eleven-soft);color:var(--eleven)}
+.empty{color:var(--line);font-family:var(--mono)}
+
+/* reuse strip */
+.reuse{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ru{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+  display:flex;flex-direction:column;gap:8px}
+.ru .k{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ru .ready{font-size:12.5px;color:var(--mut)}
+.ru .ready b{color:var(--ink)}
+.ru ol{margin:0;padding-left:18px;font-size:14px;display:flex;flex-direction:column;gap:2px}
+.ru .n{font:700 13px var(--mono);color:var(--mut)}
+
+/* pair plans */
+.pairs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pp{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.pp header{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;
+  padding:12px 16px;border-bottom:1px solid var(--line)}
+.pp header h3{margin:0;font-size:15.5px;font-weight:600}
+.pp.all header{background:var(--common-soft)} .pp.el header{background:var(--eleven-soft)}
+.pp.all header h3{color:var(--common)} .pp.el header h3{color:var(--eleven)}
+.tl{list-style:none;margin:0;padding:6px 0}
+.tl li{display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:10px;align-items:baseline;
+  padding:7px 16px;font-size:14px}
+.tl .t{font:500 12.5px var(--mono);color:var(--mut);font-variant-numeric:tabular-nums}
+.tl .lvs{align-self:center}
+.tl .lv{width:20px;height:20px;font-size:11.5px}
+
+/* volume */
+.vol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.vc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.vc h3{margin:0;font-size:16px}
+.bar{display:flex;gap:4px}
+.bar i{height:26px;flex:1;border-radius:5px;display:grid;place-items:center;font:700 11.5px var(--mono);font-style:normal}
+.bar i.all{background:var(--common-soft);color:var(--common)}
+.bar i.el{background:var(--eleven-soft);color:var(--eleven)}
+.bar i.off{background:transparent;border:1px dashed var(--line);color:var(--mut)}
+.vc dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;font-size:14px}
+.vc dt{color:var(--mut)} .vc dd{margin:0;font-weight:500}
+
+.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.lvc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+  display:flex;gap:12px;align-items:flex-start}
+.lvc p{margin:0;font-size:14px;color:var(--mut)}
+.lvc p b{color:var(--ink);display:block;font-size:14.5px}
+
+.notes{color:var(--mut);font-size:13.5px;border-top:1px solid var(--line);padding-top:16px;
+  display:flex;flex-direction:column;gap:6px;max-width:75ch}
+.notes b{color:var(--ink)}
+
+@media (max-width:860px){
+  .cycle,.reuse{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pairs,.vol{grid-template-columns:1fr}
+  .levels{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .cycle,.reuse{grid-template-columns:1fr}
+  .tl li{grid-template-columns:58px minmax(0,1fr)}
+  .tl .lvs{grid-column:2}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <h1>Информатика 10–11: цикл из четырёх пар</h1>
+  <p class="lede">С 28 сентября каждая тема идёт по одной схеме. Пары 1 и 3 общие для 10 и 11 классов: одна
+  подготовка, одно объяснение, уровни A и B. Пары 2 и 4 только у 11 классов: задачи уровней B и C, термины, зачёты.</p>
+  <div class="meta">
+    <span class="pill">Неделя <b>28.09 – 02.10</b></span>
+    <span class="pill">11 класс: <b>8 ч</b> = 4 пары</span>
+    <span class="pill">10 класс: <b>4 ч</b> = 2 пары</span>
+    <span class="pill">Пара = <b>2 × 40 мин</b></span>
+  </div>
+</header>
+
+<section>
+  <h2>Четыре пары одной темы</h2>
+  <p class="sec-lede">Цвет показывает, кто сидит на паре: бирюзовый — все, 10 и 11; сливовый — только 11 класс.</p>
+  <div class="cycle">
+    <article class="day all">
+      <div class="top"><span class="dnum">Д1</span><span class="who all">10 + 11</span></div>
+      <h3>Новая тема</h3>
+      <ul>
+        <li>Объяснение один раз для всех</li>
+        <li>Разбор примеров у доски</li>
+        <li>Общая практика по образцу</li>
+      </ul>
+      <div class="row"><span class="lvs"><i class="lv A">A</i><i class="lv B">B</i></span></div>
+    </article>
+    <article class="day el">
+      <div class="top"><span class="dnum">Д2</span><span class="who el">только 11</span></div>
+      <h3>Отработка B–C</h3>
+      <ul>
+        <li>Термины темы: диктант или мини-зачёт</li>
+        <li>Задачи уровней B и C</li>
+        <li>Формат ЕНТ</li>
+      </ul>
+      <div class="row"><span class="lvs"><i class="lv B">B</i><i class="lv C">C</i></span></div>
+    </article>
+    <article class="day all">
+      <div class="top"><span class="dnum">Д3</span><span class="who all">10 + 11</span></div>
+      <h3>Дополнение к теме</h3>
+      <ul>
+        <li>Вторая часть темы или новый поворот</li>
+        <li>Короткий повтор Д1 в начале</li>
+        <li>Общая практика</li>
+      </ul>
+      <div class="row"><span class="lvs"><i class="lv A">A</i><i class="lv B">B</i></span></div>
+    </article>
+    <article class="day el">
+      <div class="top"><span class="dnum">Д4</span><span class="who el">только 11</span></div>
+      <h3>Зачёт и углубление</h3>
+      <ul>
+        <li>Зачёт по всей теме (Д1 + Д3)</li>
+        <li>Сложные задачи уровня C</li>
+        <li>Разбор ошибок</li>
+      </ul>
+      <div class="row"><span class="lvs"><i class="lv B">B</i><i class="lv C">C</i></span></div>
+    </article>
+  </div>
+</section>
+
+<section>
+  <h2>Как это ложится на расписание</h2>
+  <p class="sec-lede">Ваши пары информатики по классам на неделю 28.09 – 02.10. Каждая пара у класса уже
+  стоит на своём месте в цикле.</p>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>Класс</th>
+          <th>Пн<span class="dt">28.09</span></th>
+          <th>Вт<span class="dt">29.09</span></th>
+          <th>Ср<span class="dt">30.09</span></th>
+          <th>Чт<span class="dt">01.10</span></th>
+          <th>Пт<span class="dt">02.10</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cls">11 А / 11 Ә<small>Таңдау, 8 ч</small></td>
+          <td><span class="empty">—</span></td>
+          <td><span class="slot all"><b>Д1</b><span>новая тема</span></span></td>
+          <td><span class="slot el"><b>Д2</b><span>B–C</span></span></td>
+          <td><span class="slot all"><b>Д3</b><span>дополнение</span></span></td>
+          <td><span class="slot el"><b>Д4</b><span>зачёт</span></span></td>
+        </tr>
+        <tr>
+          <td class="cls">11 Б / 11 Е<small>Таңдау, 8 ч</small></td>
+          <td><span class="slot all"><b>Д1</b><span>новая тема</span></span></td>
+          <td><span class="slot el"><b>Д2</b><span>B–C</span></span></td>
+          <td><span class="slot all"><b>Д3</b><span>дополнение</span></span></td>
+          <td><span class="empty">—</span></td>
+          <td><span class="slot el"><b>Д4</b><span>зачёт</span></span></td>
+        </tr>
+        <tr>
+          <td class="cls">10 А<small>выборочный, 4 ч</small></td>
+          <td><span class="slot all"><b>Д1</b><span>новая тема</span></span></td>
+          <td><span class="empty">—</span></td>
+          <td><span class="empty">—</span></td>
+          <td><span class="slot all"><b>Д3</b><span>дополнение</span></span></td>
+          <td><span class="empty">—</span></td>
+        </tr>
+        <tr>
+          <td class="cls">10 Б<small>выборочный, 4 ч</small></td>
+          <td><span class="slot all"><b>Д1</b><span>новая тема</span></span></td>
+          <td><span class="empty">—</span></td>
+          <td><span class="empty">—</span></td>
+          <td><span class="empty">—</span></td>
+          <td><span class="slot all"><b>Д3</b><span>дополнение</span></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Готовите один раз — проводите несколько</h2>
+  <p class="sec-lede">К какому дню должен быть готов каждый набор материалов и сколько раз вы его проведёте.</p>
+  <div class="reuse">
+    <div class="ru">
+      <div class="k"><span class="who all">Д1</span><span class="n">× 4</span></div>
+      <div class="ready">Готово к <b>понедельнику</b></div>
+      <ol><li>Пн — 10 А, 10 Б, 11 Б/Е</li><li>Вт — 11 А/Ә</li></ol>
+    </div>
+    <div class="ru">
+      <div class="k"><span class="who el">Д2</span><span class="n">× 2</span></div>
+      <div class="ready">Готово ко <b>вторнику</b></div>
+      <ol><li>Вт — 11 Б/Е</li><li>Ср — 11 А/Ә</li></ol>
+    </div>
+    <div class="ru">
+      <div class="k"><span class="who all">Д3</span><span class="n">× 4</span></div>
+      <div class="ready">Готово к <b>среде</b></div>
+      <ol><li>Ср — 11 Б/Е</li><li>Чт — 11 А/Ә, 10 А</li><li>Пт — 10 Б</li></ol>
+    </div>
+    <div class="ru">
+      <div class="k"><span class="who el">Д4</span><span class="n">× 2</span></div>
+      <div class="ready">Готово к <b>пятнице</b></div>
+      <ol><li>Пт — 11 А/Ә, 11 Б/Е</li></ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Разметка пары по минутам</h2>
+  <p class="sec-lede">Два урока подряд, 80 минут. Уровни справа показывают, какие задания идут в этом отрезке.</p>
+  <div class="pairs">
+    <article class="pp all">
+      <header><h3>Д1 · Новая тема</h3><span class="who all">10 + 11</span></header>
+      <ol class="tl">
+        <li><span class="t">0–5</span><span>Разминка: 2–3 вопроса по прошлой теме</span><span class="lvs"><i class="lv A">A</i></span></li>
+        <li><span class="t">5–30</span><span>Объяснение новой темы, термины на доске</span><span></span></li>
+        <li><span class="t">30–40</span><span>Разбор 2–3 примеров вместе с классом</span><span class="lvs"><i class="lv A">A</i></span></li>
+        <li><span class="t">40–75</span><span>Практика: 5 задач A, затем 3 задачи B</span><span class="lvs"><i class="lv A">A</i><i class="lv B">B</i></span></li>
+        <li><span class="t">75–80</span><span>Итог, домашнее задание</span><span></span></li>
+      </ol>
+    </article>
+    <article class="pp el">
+      <header><h3>Д2 · Отработка</h3><span class="who el">только 11</span></header>
+      <ol class="tl">
+        <li><span class="t">0–10</span><span>Терминологический диктант, 10 терминов</span><span class="lvs"><i class="lv A">A</i></span></li>
+        <li><span class="t">10–20</span><span>Разбор домашнего задания</span><span class="lvs"><i class="lv B">B</i></span></li>
+        <li><span class="t">20–70</span><span>12 задач: 6 B, затем 6 C в формате ЕНТ</span><span class="lvs"><i class="lv B">B</i><i class="lv C">C</i></span></li>
+        <li><span class="t">70–80</span><span>Самопроверка по ключу, трудные задачи на доске</span><span></span></li>
+      </ol>
+    </article>
+    <article class="pp all">
+      <header><h3>Д3 · Дополнение</h3><span class="who all">10 + 11</span></header>
+      <ol class="tl">
+        <li><span class="t">0–10</span><span>Быстрый опрос по Д1</span><span class="lvs"><i class="lv A">A</i></span></li>
+        <li><span class="t">10–30</span><span>Вторая часть темы</span><span></span></li>
+        <li><span class="t">30–75</span><span>Практика: 4 задачи A, 4 задачи B</span><span class="lvs"><i class="lv A">A</i><i class="lv B">B</i></span></li>
+        <li><span class="t">75–80</span><span>Итог, домашнее задание</span><span></span></li>
+      </ol>
+    </article>
+    <article class="pp el">
+      <header><h3>Д4 · Зачёт</h3><span class="who el">только 11</span></header>
+      <ol class="tl">
+        <li><span class="t">0–40</span><span>Зачёт по теме: 10–15 заданий B и C</span><span class="lvs"><i class="lv B">B</i><i class="lv C">C</i></span></li>
+        <li><span class="t">40–70</span><span>Задачи повышенной сложности, 5 в формате ЕНТ</span><span class="lvs"><i class="lv C">C</i></span></li>
+        <li><span class="t">70–80</span><span>Разбор ошибок зачёта</span><span></span></li>
+      </ol>
+    </article>
+  </div>
+</section>
+
+<section>
+  <h2>Объём практики за тему</h2>
+  <p class="sec-lede">11 класс получает всю практику 10 класса и сверх неё две пары сложных задач.</p>
+  <div class="vol">
+    <div class="vc">
+      <h3>11 класс</h3>
+      <div class="bar"><i class="all">Д1</i><i class="el">Д2</i><i class="all">Д3</i><i class="el">Д4</i></div>
+      <dl>
+        <dt>Пар</dt><dd>4 (8 уроков)</dd>
+        <dt>Задачи A/B</dt><dd>около 16 на общих парах</dd>
+        <dt>Задачи B/C</dt><dd>около 30: 12 на Д2, 15–20 на Д4</dd>
+        <dt>Термины</dt><dd>диктант на Д2, зачёт на Д4</dd>
+        <dt>ДЗ</dt><dd>после Д1 и Д3, уровень B–C</dd>
+      </dl>
+    </div>
+    <div class="vc">
+      <h3>10 класс</h3>
+      <div class="bar"><i class="all">Д1</i><i class="off">—</i><i class="all">Д3</i><i class="off">—</i></div>
+      <dl>
+        <dt>Пар</dt><dd>2 (4 урока)</dd>
+        <dt>Задачи A/B</dt><dd>около 16 на общих парах</dd>
+        <dt>Задачи B/C</dt><dd>нет, только в ДЗ по желанию</dd>
+        <dt>Термины</dt><dd>опрос в начале Д3</dd>
+        <dt>ДЗ</dt><dd>после Д1 и Д3, 5 заданий уровня A–B</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Уровни заданий</h2>
+  <div class="levels">
+    <div class="lvc"><i class="lv A">A</i><p><b>Знание и понимание</b>Определение, термин, решение по образцу, как в разобранном примере.</p></div>
+    <div class="lvc"><i class="lv B">B</i><p><b>Применение</b>Стандартная задача без образца, нужно выбрать способ самому.</p></div>
+    <div class="lvc"><i class="lv C">C</i><p><b>Анализ и сложные задачи</b>Нестандартное условие, несколько шагов, задачи ЕНТ повышенной сложности.</p></div>
+  </div>
+</section>
+
+<footer class="notes">
+  <span><b>Расписание</b> взято из файла «Мектеп кестесі — жаңа ережемен (11.09) v2». Если с тех пор пары
+  информатики переставили, цикл сдвигается вместе с ними: первая пара класса на неделе — Д1, дальше по порядку.</span>
+  <span><b>Уроки ИИ</b> (10 Ә, 10 Б, 10 В, 11 В, 11 Г, 11 Д, по 1 ч) в этот цикл не входят и планируются отдельно.</span>
+  <span><b>Если тема большая</b>, цикл можно растянуть на две недели: вторая неделя снова начинается с общей пары.</span>
+</footer>
+
+</div>
